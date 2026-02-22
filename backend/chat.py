@@ -1,26 +1,28 @@
 import os
 import requests
 from dotenv import load_dotenv
-import requests
 from resume_context import resume_context
 
 load_dotenv()
+
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+
 def ask_ai(question):
 
-    prompt = f"""
+    try:
+
+        if not OPENROUTER_API_KEY:
+            print("ERROR: API key not found")
+            return "AI service not configured."
+
+        prompt = f"""
 You are an AI assistant for my portfolio.
 
 IMPORTANT RULES:
 - Answer ONLY using the resume information provided.
 - Format lists using newline characters.
 - Each item MUST be on a new line.
-- Do NOT return everything in one line.
-- Example format:
-
-Full-stack development
-Artificial Intelligence
-Backend development
 
 RESUME:
 {resume_context}
@@ -31,16 +33,33 @@ QUESTION:
 ANSWER:
 """
 
-    response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
-        },
-        json={
-            "model": "mistralai/mistral-7b-instruct",
-            "messages": [{"role": "user", "content": prompt}]
-        }
-    )
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "mistralai/mistral-7b-instruct",
+                "messages": [
+                    {"role": "user", "content": prompt}
+                ]
+            },
+            timeout=30
+        )
 
-    return response.json()["choices"][0]["message"]["content"]
+        print("STATUS:", response.status_code)
+        print("RESPONSE:", response.text)
+
+        if response.status_code != 200:
+            return "AI service error."
+
+        result = response.json()
+
+        return result["choices"][0]["message"]["content"]
+
+    except Exception as e:
+
+        print("AI ERROR:", str(e))
+
+        return "Error connecting to AI."
