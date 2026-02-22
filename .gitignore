@@ -1,7 +1,29 @@
-node_modules/
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Backend
+backend/__pycache__/
+backend/chat.db
+backend/.env
+backend/*.pyc
+
+# Python
 __pycache__/
-.env
-chat.db
-dist/
-.vscode/
 *.pyc
+*.pyo
+
+# Environment variables
+.env
+
+# Vite / React
+dist/
+node_modules/
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

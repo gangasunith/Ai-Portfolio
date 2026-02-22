@@ -2,8 +2,7 @@
 import requests
 from resume_context import resume_context
 
-OPENROUTER_API_KEY = "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"
-
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 def ask_ai(question):
 
     prompt = f"""
