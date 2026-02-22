@@ -20,10 +20,9 @@ app.add_middleware(
 class ChatRequest(BaseModel):
     message: str
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def home():
-    return {"message": "AI Resume Assistant Backend Running"}
-
+    return {"message": "Backend running"}
 
 @app.post("/chat")
 def chat(request: ChatRequest):
