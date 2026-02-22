@@ -1,7 +1,10 @@
-
+import os
+import requests
+from dotenv import load_dotenv
 import requests
 from resume_context import resume_context
 
+load_dotenv()
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 def ask_ai(question):
 

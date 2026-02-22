@@ -8,7 +8,7 @@ export default function Chat() {
   >([]);
   const [loading, setLoading] = useState(false); 
   useEffect(() => {
-    axios.get("http://localhost:8000/chat-history")
+    axios.get("https://ai-portfolio-nt5p.onrender.com/chat-history")
     .then(res => {
       const formatted = res.data.map((msg:any) => ({
         sender: msg.sender,
@@ -23,7 +23,7 @@ export default function Chat() {
    
 
 useEffect(() => {
-  axios.get("http://localhost:8000/chat-history")
+  axios.get("https://ai-portfolio-nt5p.onrender.com/chat-history")
   .then(res => {
     const formattedMessages = res.data.map((msg:any) => ({
       sender: msg.sender,
@@ -44,7 +44,7 @@ useEffect(() => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8000/chat",
+        "https://ai-portfolio-nt5p.onrender.com/chat",
         { message }
       );
 
